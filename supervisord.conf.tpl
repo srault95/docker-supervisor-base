@@ -1,6 +1,6 @@
 [unix_http_server]
-file=/tmp/supervisor.sock   ; (the path to the socket file)
-;chmod=0700                 ; socket file mode (default 0700)
+file=/var/run/supervisor.sock
+chmod=0700
 ;chown=nobody:nogroup       ; socket file uid:gid owner
 ;username=user              ; (default is no username (open server))
 ;password=123               ; (default is no password (open server))
@@ -17,7 +17,7 @@ logfile=/var/log/supervisor/supervisord.log
 logfile_maxbytes=50MB        ; (max main logfile bytes b4 rotation;default 50MB)
 logfile_backups=10           ; (num of main logfile rotation backups;default 10)
 loglevel={{ SP_LOG_LEVEL | default('info') }} ; (log level;default info; others: debug,warn,trace)
-pidfile=/tmp/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
+pidfile=/var/run/supervisord.pid
 nodaemon=true               ; (start in foreground if true;default false)
 minfds=1024                  ; (min. avail startup file descriptors;default 1024)
 minprocs=200                 ; (min. avail process descriptors;default 200)
@@ -26,7 +26,7 @@ minprocs=200                 ; (min. avail process descriptors;default 200)
 ;identifier=supervisor       ; (supervisord identifier, default is 'supervisor')
 ;directory=/tmp              ; (default is not to cd during start)
 ;nocleanup=true              ; (don't clean up tempfiles at start;default false)
-;childlogdir=/tmp            ; ('AUTO' child log dir, default $TEMP)
+childlogdir=/var/log/supervisor
 ;environment=KEY="value"     ; (key value pairs to add to environment)
 ;strip_ansi=false            ; (strip ansi escape codes in logs; def. false)
 
@@ -34,7 +34,7 @@ minprocs=200                 ; (min. avail process descriptors;default 200)
 supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 
 [supervisorctl]
-serverurl=unix:///tmp/supervisor.sock ; use a unix:// URL  for a unix socket
+serverurl=unix:///var/run/supervisor.sock
 ;serverurl=http://127.0.0.1:9001 ; use an http:// url to specify an inet socket
 ;username=chris              ; should be same as http_username if set
 ;password=123                ; should be same as http_password if set
